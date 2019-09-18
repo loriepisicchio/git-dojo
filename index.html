@@ -38,9 +38,7 @@
 <div class="reveal">
     <div class="slides">
         <section data-state="orange" data-markdown>
-            # What is git ?
-            Note:
-            https://www.vogella.com/tutorials/Git/article.html
+            # How to become a Git hero?
         </section>
         <section data-markdown>
             ## Distributed version control system
@@ -73,7 +71,7 @@
 
                 Get a copy of an existing project
 
-                <pre><code class="hljs sh">git clone git@gitlab.corp.kelkoo.net:group/project.git</code></pre>
+                <pre><code class="hljs sh">git clone git@github.com:loriepisicchio/git-dojo-practice.git</code></pre>
 
                 <i class="fas fa-info"></i> Prefer SSH URLs
             </section>
@@ -112,7 +110,7 @@
                 Push local commits to remote repository
 
                 ```sh
-                git push remoteName remoteBranchName
+                git push &lt;remoteName&gt; &lt;remoteBranchName&gt;
                 git push origin master
 
                 git push --set-upstream origin master
@@ -124,17 +122,22 @@
                 Get changes from a remote repository into current branch
 
                 ```sh
+                git pull &lt;remoteName&gt; &lt;remoteBranchName&gt;
                 git pull origin master
                 ```
 
                 Defaults to `merge` strategy, can be configured to `rebase`.
-                [Git tip](http://confluence.corp.kelkoo.net:8090/display/PKC/Git+User+Guide#GitUserGuide-Forcerebasingonpullconflicts)
             </section>
-            <section>
-                <div class="twocolumns">
-                    <div><img src="img/git-pull.gif" /></div>
-                    <div><img src="img/git-pull-rebase.gif" /></div>
-                </div>
+            <section data-markdown>
+                ### git pull strategies
+
+                ![Pull strategies](img/git-pull-strategies.png)
+
+                ```
+                [pull]
+                # force rebasing on pull but keep actual merges
+                rebase = preserve
+                ```
             </section>
             <section data-markdown>
                 ### git checkout
@@ -452,6 +455,8 @@
             - [Learn Git branching](https://learngitbranching.js.org/?locale=fr_FR)
             - [Git flight rules](https://github.com/k88hudson/git-flight-rules)
             - [ZSH git aliases](https://github.com/robbyrussell/oh-my-zsh/wiki/Cheatsheet#git)
+
+            - https://www.vogella.com/tutorials/Git/article.html
         </section>
 
     </div>
