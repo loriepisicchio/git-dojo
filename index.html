@@ -53,7 +53,7 @@
         <section>
             <h2>Git areas</h2>
             <div>
-                <img src="img/git-transport-v1.png" style="width: 70%; height: 70%;" />
+                <img src="img/git-transport-v1.png" style="width: 70%; height: 70%;"/>
             </div>
             <small>Source: <a href="https://www.patrickzahnd.ch/blog.html#gittransport">https://www.patrickzahnd.ch/blog.html#gittransport</a></small>
         </section>
@@ -70,11 +70,11 @@
             </section>
             <section>
                 <h3>git clone</h3>
-                
+
                 Get a copy of an existing project
-    
+
                 <pre><code class="hljs sh">git clone git@gitlab.corp.kelkoo.net:group/project.git</code></pre>
-                
+
                 <i class="fas fa-info"></i> Prefer SSH URLs
             </section>
             <section data-markdown="">
@@ -90,9 +90,9 @@
             </section>
             <section data-markdown>
                 ### git add
-                
+
                 Add file(s) to the index
-    
+
                 ```sh
                 git add README.md
                 git add *.sh
@@ -143,19 +143,23 @@
 
                 ```sh
                 git checkout branchName
+                # equivalent to
+                git switch branchName
                 ```
 
                 Create a branch
 
                 ```sh
                 git checkout -b branchName
+                # or
+                git switch -c branchName
                 ```
             </section>
         </section>
-        
+
         <section data-markdown data-state="blue">
             ## Practice
-            
+
             Do a modification on a branch:
             - Add a new file with some content
             - Commit and push this file
@@ -179,39 +183,43 @@
 
         <section data-markdown data-state="blue">
             ## Practice
-            
+
             - Create two files, commit and push
             - Move one of them
             - Delete the other
             - Commit and push changes
         </section>
 
-        <section>
-            <section data-markdown>
+        <section data-markdown>
             ## A useful command: git log
 
             Display history of commits
 
             ![git log](img/git-log.png)
-            </section>
+        </section>
 
-            <section>
+        <section>
             <div>But even better: view branches history</div>
-            
-            <code>git lol</code>
-            
-            <div><img src="img/git-lol.png" /></div>
 
-            <i class="fas fa-info"></i> <code style="color:#7F690E">9c531244</code> is called the <em>hash</em> (ID)
-            </section>
+            <code>git lol</code>
+
+            <div><img src="img/git-pointers.png"/></div>
+
+            <ul>
+                <li>Every commit has a unique ID (SHA1) <code class="smallcode" style="color:#7F690E">9c531244</code>
+                </li>
+                <li>A commit have 0..N parent(s)</li>
+                <li>Everything else is a pointer to a commit</li>
+            </ul>
 
         </section>
+
         <section data-markdown>
             ## Configure what goes under source control
 
             Configure patterns to be ignored in `.gitignore` file
 
-            [Example](http://gitlab.corp.kelkoo.net/syndication/publisherManagementBO/blob/qa/.gitignore)
+            [Example](http://gitignore.io/api/java)
         </section>
         <section data-markdown data-state="blue">
             ## Practice
@@ -224,7 +232,7 @@
 
         <section data-markdown>
             ## Fix unwanted changes
-            - Not commited: `git checkout`
+            - Not commited: `git checkout` | `git restore`
                 - resets file in the state of the local branch
 
             - Commited, not pushed: `git reset`
@@ -232,11 +240,11 @@
 
             - Pushed: `git revert`
                 - creates a new commit that reverts previous changes
-            
+
         </section>
         <section data-markdown data-state="blue">
             ## Practice
-            
+
             - Do a modification on a file, revert it
 
             - Revert a commit
@@ -253,15 +261,15 @@
         </section>
         <section data-markdown data-state="blue">
             ## Practice
-            
+
             - Create a branch `feature/change-color`
-                - Edit `application.conf` file
-                - Commit and push
+            - Edit `application.conf` file
+            - Commit and push
             - Go back to branch `master`
             - Create a branch `feature/add-size`
-                - Edit `application.conf` file by adding a new `size=100` conf
-                - Commit and push
-            - Merge branches in Gitlab
+            - Edit `application.conf` file by adding a new `size=100` conf
+            - Commit and push
+            - Try to merge branches in Github
         </section>
 
         <section data-markdown>
@@ -270,17 +278,180 @@
             ![git log](img/git-flow.png)
         </section>
 
+        <section>
+            <h2>Merge vs. rebase</h2>
+
+            <div class="twocolumns">
+                <div><img src="img/git-pull.gif"/></div>
+                <div><img src="img/git-pull-rebase.gif"/></div>
+            </div>
+        </section>
+
+        <section data-markdown>
+            ## Best practice
+            Rebase before opening a Merge Request
+            ```
+            git checkout qa
+            git pull
+            git checkout -
+            git rebase qa
+            ```
+
+            ![Git rebase](img/git-rebase-qa.png)
+
+        </section>
+
+        <section data-markdown>
+            ## Event better practice
+            Interactive rebase
+
+            ```
+            git rebase -i qa
+            git rebase -i HEAD~3
+            ```
+
+            Useful to clean history before opening a MR
+            - combine multiple commits into one
+            - reword a commit message
+            - reorder commits
+        </section>
+
+        <section data-state="lemon" data-markdown>
+            ## Practice
+            Combining multiple commits into one
+
+            `squash` / `fixup`
+
+            ![squash fixup](img/git-rebase-squash-fixup.png)
+        </section>
+
+        <section data-state="lemon" data-markdown>
+            ## Practice
+            Reword a commit message (fix typo)
+
+            `reword`
+        </section>
+
+        <section data-state="lemon" data-markdown>
+            ## Practice
+            Reorder commits to enable squash between 2 commits separated in history
+
+            ![squash fixup](img/git-rebase-reorder.png)
+        </section>
+
+        <section data-markdown>
+            ## Auto-squash
+
+            Git will automatically squash commits with their fixup commits
+
+            ```
+            git commit --fixup &lt;hash&gt;
+            git rebase -i --autosquash qa
+            ```
+
+        </section>
+
+        <section data-state="lemon" data-markdown>
+            ## Practice
+            Auto squash
+        </section>
+
+        <section data-markdown>
+            ## Interactive rebase
+            ### More options
+
+            - `drop`: remove a commit from history (same as deleting the line)
+            - `edit`: stop and do whatever you want (edit content of a commit for instance)
+            - `exec`: execute a shell command
+        </section>
+
+        <section>
+            <h2>Force is harmful</h2>
+
+            <div>
+                <img src="img/git-force-commitstrip.jpg" style="width: 50%; height: 50%;"/>
+            </div>
+        </section>
+
+        <section data-markdown>
+            ## Force is harmful
+
+            ```
+            $ git push --force-with-lease origin feature-2
+            To /tmp/repo
+            ! [rejected] feature-2 -> feature-2 (stale info)
+            error: failed to push some refs to '/tmp/repo'
+            ```
+
+            ![squash fixup](img/git-push-force.png)
+        </section>
+
+        <section data-markdown>
+            ## Stashing commits
+
+            ```
+            git stash save
+            git stash pop
+            ```
+        </section>
+
+        <section data-state="lemon" data-markdown>
+            ## Practice
+            Stash
+
+            - Start a modification on wrong branch
+            - Use stash to fix your mess
+        </section>
+
+
+        <section data-markdown>
+            ## Amend commits
+
+            ```
+            git commit --amend -m "an updated message"
+            ```
+        </section>
+
+        <section data-state="lemon" data-markdown>
+            ## Practice
+
+            Amend commit
+        </section>
+
+        <section data-markdown>
+            ## Nothing is lost
+
+            ```
+            git reflog
+            ```
+        </section>
+
+        <section data-markdown>
+            ## Other useful commands
+
+            Partial commit (_Easier with your IDE_)
+            ```
+            git commit -p
+            ```
+
+            Copy a commit from another branch into current one
+            ```
+            git cherry-pick &lt;sha1&gt;
+            ```
+
+            Find the culprit!
+            ```
+            git bisect
+            ```
+        </section>
+
         <section data-markdown data-state="brown">
-        ## Notes
+            ## References
 
-        ### git lol alias
-        ```
-        # ~/.gitconfig
-        [alias]
-        lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
-        ```
-
-        [Kelkoo Git user guide](http://confluence.corp.kelkoo.net:8090/display/PKC/Git+User+Guide)
+            - [Kelkoo Git user guide](http://confluence.corp.kelkoo.net:8090/display/PKC/Git+User+Guide)
+            - [Learn Git branching](https://learngitbranching.js.org/?locale=fr_FR)
+            - [Git flight rules](https://github.com/k88hudson/git-flight-rules)
+            - [ZSH git aliases](https://github.com/robbyrussell/oh-my-zsh/wiki/Cheatsheet#git)
         </section>
 
     </div>
