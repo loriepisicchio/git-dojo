@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/kelkoo.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css">
+
+    <script src="https://kit.fontawesome.com/0ac9559673.js"></script>
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <style>
+        .twocolumns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 40px;
+            height: 100vh;
+        }
+    </style>
+
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-state="orange" data-markdown>
+            # What is git ?
+            Note:
+            https://www.vogella.com/tutorials/Git/article.html
+        </section>
+        <section data-markdown>
+            ## Distributed version control system
+
+            ![Git vs SVN](img/git-svn-models.png)
+
+            Note:
+            http://sgdev-blog.blogspot.com/2014/03/using-git.html
+        </section>
+        <section>
+            <h2>Git areas</h2>
+            <div>
+                <img src="img/git-transport-v1.png" style="width: 70%; height: 70%;" />
+            </div>
+            <small>Source: <a href="https://www.patrickzahnd.ch/blog.html#gittransport">https://www.patrickzahnd.ch/blog.html#gittransport</a></small>
+        </section>
+        <section>
+            <section data-markdown>
+                ## Git basic commands
+                - git clone
+                - git status
+                - git add
+                - git commit
+                - git push
+                - git pull
+                - git checkout (-b)
+            </section>
+            <section>
+                <h3>git clone</h3>
+                
+                Get a copy of an existing project
+    
+                <pre><code class="hljs sh">git clone git@gitlab.corp.kelkoo.net:group/project.git</code></pre>
+                
+                <i class="fas fa-info"></i> Prefer SSH URLs
+            </section>
+            <section data-markdown="">
+                ### git status
+
+                Display files having differences with `HEAD`
+
+                ```sh
+                git status
+                ```
+
+                ![git status](img/git-status.png)
+            </section>
+            <section data-markdown>
+                ### git add
+                
+                Add file(s) to the index
+    
+                ```sh
+                git add README.md
+                git add *.sh
+                ```
+
+                ### git commit
+
+                Push changes into local repository
+
+                ```sh
+                git commit -m "A new feature"
+                ```
+            </section>
+            <section data-markdown>
+                ### git push
+
+                Push local commits to remote repository
+
+                ```sh
+                git push remoteName remoteBranchName
+                git push origin master
+
+                git push --set-upstream origin master
+                ```
+            </section>
+            <section data-markdown>
+                ### git pull
+
+                Get changes from a remote repository into current branch
+
+                ```sh
+                git pull origin master
+                ```
+
+                Defaults to `merge` strategy, can be configured to `rebase`.
+                [Git tip](http://confluence.corp.kelkoo.net:8090/display/PKC/Git+User+Guide#GitUserGuide-Forcerebasingonpullconflicts)
+            </section>
+            <section>
+                <div class="twocolumns">
+                    <div><img src="img/git-pull.gif" /></div>
+                    <div><img src="img/git-pull-rebase.gif" /></div>
+                </div>
+            </section>
+            <section data-markdown>
+                ### git checkout
+
+                Switch to a branch
+
+                ```sh
+                git checkout branchName
+                ```
+
+                Create a branch
+
+                ```sh
+                git checkout -b branchName
+                ```
+            </section>
+        </section>
+        
+        <section data-markdown data-state="blue">
+            ## Practice
+            
+            Do a modification on a branch:
+            - Add a new file with some content
+            - Commit and push this file
+
+        </section>
+
+        <section data-markdown>
+            ## More advanced commands
+
+            Remove file(s):
+
+            ```sh
+            git rm fileName
+            ```
+
+            Move file:
+            ```sh
+            git mv oldFileName newFileName
+            ```
+        </section>
+
+        <section data-markdown data-state="blue">
+            ## Practice
+            
+            - Create two files, commit and push
+            - Move one of them
+            - Delete the other
+            - Commit and push changes
+        </section>
+
+        <section>
+            <section data-markdown>
+            ## A useful command: git log
+
+            Display history of commits
+
+            ![git log](img/git-log.png)
+            </section>
+
+            <section>
+            <div>But even better: view branches history</div>
+            
+            <code>git lol</code>
+            
+            <div><img src="img/git-lol.png" /></div>
+
+            <i class="fas fa-info"></i> <code style="color:#7F690E">9c531244</code> is called the <em>hash</em> (ID)
+            </section>
+
+        </section>
+        <section data-markdown>
+            ## Configure what goes under source control
+
+            Configure patterns to be ignored in `.gitignore` file
+
+            [Example](http://gitlab.corp.kelkoo.net/syndication/publisherManagementBO/blob/qa/.gitignore)
+        </section>
+        <section data-markdown data-state="blue">
+            ## Practice
+
+            - Add file `something.toto`
+            - Add `*.toto` in `.gitignore`
+            - Look at `git status`
+            - Then `git status --ignore`
+        </section>
+
+        <section data-markdown>
+            ## Fix unwanted changes
+            - Not commited: `git checkout`
+                - resets file in the state of the local branch
+
+            - Commited, not pushed: `git reset`
+                - rewind the history
+
+            - Pushed: `git revert`
+                - creates a new commit that reverts previous changes
+            
+        </section>
+        <section data-markdown data-state="blue">
+            ## Practice
+            
+            - Do a modification on a file, revert it
+
+            - Revert a commit
+        </section>
+
+        <section data-markdown>
+            ## Git branches & conflict management
+
+            ![git branches](img/git-branches.svg)
+
+            Very useful for parallel developments
+
+            Mainly used to isolate different features, bugfixes
+        </section>
+        <section data-markdown data-state="blue">
+            ## Practice
+            
+            - Create a branch `feature/change-color`
+                - Edit `application.conf` file
+                - Commit and push
+            - Go back to branch `master`
+            - Create a branch `feature/add-size`
+                - Edit `application.conf` file by adding a new `size=100` conf
+                - Commit and push
+            - Merge branches in Gitlab
+        </section>
+
+        <section data-markdown>
+            ## Git workflow presentation
+
+            ![git log](img/git-flow.png)
+        </section>
+
+        <section data-markdown data-state="brown">
+        ## Notes
+
+        ### git lol alias
+        ```
+        # ~/.gitconfig
+        [alias]
+        lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+        ```
+
+        [Kelkoo Git user guide](http://confluence.corp.kelkoo.net:8090/display/PKC/Git+User+Guide)
+        </section>
+
+    </div>
+</div>
+
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {src: 'plugin/highlight/highlight.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
