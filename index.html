@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>Mastering Git</title>
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/reveal.css">
@@ -37,21 +37,21 @@
 <div class="reveal">
     <div class="slides">
         <section data-state="orange" data-markdown>
-            # How to become a Git hero?
+            # Mastering Git
         </section>
         <section>
             <div class="twocolumns">
                 <div>
-                    <div><img src="https://avatars1.githubusercontent.com/u/1655950?s=460&v=4" width="200" height="200" /></div>
+                    <div><img src="img/avatar-lorie.png" width="200" height="200" /></div>
                     <div><strong>Lorie Pisicchio</strong></div>
-                    <div>Dev fullstack @KelkooGroup</div>
+                    <div>Dev fullstack</div>
                     <div>Promo 2006</div>
                 </div>
                 <div>
-                    <div><img src="https://media.licdn.com/dms/image/C5603AQFryw44Umxs4Q/profile-displayphoto-shrink_200_200/0?e=1574294400&v=beta&t=46LulJKtrOr8gtgHyUgQJwiKjGBp7ddwer4l4pPGuec" width="200" height="200" /></div>
+                    <div><img src="img/avatar-gael.png" width="200" height="200" /></div>
                     <div><strong>Gaël Jourdan-Weil</strong></div>
-                    <div>Dev fullstack @KelkooGroup</div>
-                    <div>Promo 2012 (ISI)</div>
+                    <div>Dev fullstack</div>
+                    <div>Promo 2012</div>
                 </div>
             </div>
         </section>
@@ -161,7 +161,7 @@
 
                 ```sh
                 git checkout branchName
-                # equivalent to
+                # or (since v2.23)
                 git switch branchName
                 ```
 
@@ -169,7 +169,7 @@
 
                 ```sh
                 git checkout -b branchName
-                # or
+                # or (since v2.23)
                 git switch -c branchName
                 ```
             </section>
@@ -178,8 +178,7 @@
         <section data-markdown data-state="lemon">
             ## Practice
 
-            - Fork project [git-dojo-practice](https://github.com/loriepisicchio/git-dojo-practice) on Github
-
+            - Fork project **loriepisicchio/git-dojo-practice** on Github (https://github.com/loriepisicchio/git-dojo-practice)
             - Clone your fork on your local machine
 
             - Create a new branch
@@ -189,7 +188,7 @@
         </section>
 
         <section data-markdown>
-            ## More advanced commands
+            ## Files commands
 
             Remove file(s):
 
@@ -207,8 +206,8 @@
             ## Practice
 
             - Create two files, commit and push
-            - Move one of them
-            - Delete the other
+            - Move one of them using Git
+            - Delete the other using Git
             - Commit and push changes
         </section>
 
@@ -257,7 +256,7 @@ lol = log --graph --decorate --pretty=oneline --abbrev-commit</code></pre>
             - Commited, not pushed: `git reset`
                 - rewind the history
 
-            - Pushed: `git revert`
+            - Pushed: `git revert &lt;commit&gt;`
                 - creates a new commit that reverts previous changes
 
         </section>
@@ -288,28 +287,40 @@ lol = log --graph --decorate --pretty=oneline --abbrev-commit</code></pre>
         <section data-markdown data-state="lemon">
             ## Practice
 
-            - Create a branch `feature/change-color`
-                - Edit `application.conf` file
-                - Commit and push
             - Go back to branch `master`
-            - Create a branch `feature/add-size`
-                - Edit `application.conf` file by adding a new `size=100` conf
-                - Commit and push
-            - Try to merge branches in Github
+            - Create a branch `fix/typo`
+                - Edit `models.ts` file, rename the type to `Student`, commit and push
+            - Go back to branch `master`
+            - Create a branch `feature/formatting`
+                - Edit `models.ts` file, adding some newlines in type declaration, commit and push
+            - Try to merge both branches to `yourfork/master`, what happens?
         </section>
 
         <section data-markdown>
             ## Best practice
             Rebase before opening a Pull Request
             ```
-            git checkout qa
+            git checkout master
             git pull
             git checkout -
-            git rebase qa
+            git rebase master
             ```
 
             ![Git rebase](img/git-rebase-qa.png)
 
+        </section>
+
+        <section data-markdown data-state="lemon">
+            ## Practice
+
+            - Go back to branch `master`
+            - Create a branch `testrebase`
+                - Create 2 commits and push
+            - Go back to branch `master`
+                - Create 1 commit and push
+            - Go back to branch `testrebase`
+                - Rebase your branch on top of `master`
+                - Look at the commits history
         </section>
 
         <section>
@@ -321,7 +332,11 @@ lol = log --graph --decorate --pretty=oneline --abbrev-commit</code></pre>
                 <li>Every commit has a unique ID (SHA1) <code class="smallcode" style="color:#7F690E">9c531244</code>
                 </li>
                 <li>A commit have 0..N parent(s)</li>
-                <li>Everything else is a pointer to a commit</li>
+                <li>Everything else is a pointer to a commit
+                <ul>
+                    <li>Special pointer: <code class="smallcode">HEAD</code></li>
+                    <li>Pointer manipulations: <code class="smallcode">&lt;ref&gt;~2</code></li>
+                </ul>
             </ul>
 
         </section>
@@ -574,7 +589,11 @@ lol = log --graph --decorate --pretty=oneline --abbrev-commit</code></pre>
             - [ZSH git aliases](https://github.com/robbyrussell/oh-my-zsh/wiki/Cheatsheet#git)
             - [Git detailed tutorial](https://www.vogella.com/tutorials/Git/article.html)
 
-            Looking for an internship? https://www.kelkoogroup.com/fr/jobs/ ;)
+            ------
+
+            Looking for an internship?
+
+            **https://www.kelkoogroup.com/fr/jobs/**
         </section>
 
     </div>
